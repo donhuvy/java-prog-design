@@ -1,25 +1,21 @@
-package javaprogramdesign.chapter02.bank05;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.stream.Stream;
 
-import java.util.HashMap;
-
-public class Bank {
-
-    private HashMap<Integer, BankAccount> accounts;
+public class Bank implements Iterable<BankAccount> {
+    private Map<Integer, BankAccount> accounts;
     private int nextacct;
 
-    public Bank(HashMap<Integer, BankAccount> accounts, int n) {
+    public Bank(Map<Integer, BankAccount> accounts, int n) {
         this.accounts = accounts;
         nextacct = n;
     }
 
     public int newAccount(int type, boolean isforeign) {
         int acctnum = nextacct++;
-        BankAccount ba;
-        if (type == 1) {
-            ba = new SavingsAccount(acctnum);
-        } else {
-            ba = new CheckingAccount(acctnum);
-        }
+        BankAccount ba = AccountFactory.createAccount(type, acctnum);
         ba.setForeign(isforeign);
         accounts.put(acctnum, ba);
         return acctnum;
@@ -42,7 +38,8 @@ public class Bank {
 
     public boolean authorizeLoan(int acctnum, int loanamt) {
         BankAccount ba = accounts.get(acctnum);
-        return ba.hasEnoughCollateral(loanamt);
+        LoanAuthorizer auth = LoanAuthorizer.getAuthorizer(ba);
+        return auth.authorizeLoan(loanamt);
     }
 
     public String toString() {
@@ -54,12 +51,31 @@ public class Bank {
 
     public void addInterest() {
         for (BankAccount ba : accounts.values())
-            if (ba instanceof SavingsAccount) {
-                SavingsAccount sa = (SavingsAccount) ba;
-                sa.addInterest();
-            }
+            ba.addInterest();
     }
 
+    public int nextAcctNum() {
+        return nextacct;
+    }
+
+    public Iterator<BankAccount> iterator() {
+        Iterator<BankAccount> iter = accounts.values().iterator();
+        return new UnmodifiableBankIterator(iter);
+    }
+
+    public Stream<BankAccount> stream() {
+        return accounts.values().stream();
+    }
+
+    public Collection<Loan> loans() {
+        return new ArrayList<Loan>();
+    }
+
+    public void makeSuspicious(int acctnum) {
+        BankAccount ba = accounts.get(acctnum);
+        ba = new SuspiciousAccount(ba);
+        accounts.put(acctnum, ba);
+    }
 }
 
 

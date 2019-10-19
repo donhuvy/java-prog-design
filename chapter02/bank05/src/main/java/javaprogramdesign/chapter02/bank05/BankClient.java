@@ -16,23 +16,32 @@ public class BankClient {
 
     public void run() {
         while (!done) {
-            System.out.print("Enter command (0=quit, 1=new, 2=select, 3=deposit, 4=loan, 5=show, 6=interest, 7=setforeign): ");
+            System.out.print("Enter command (0 = Quit, 1 = New, 2 = Select, 3 = Deposit, 4 = Loan, 5 = Show, 6 = Interest, 7 = Setforeign): ");
             int cnum = scanner.nextInt();
             processCommand(cnum);
         }
     }
 
     private void processCommand(int cnum) {
-        if (cnum == 0) quit();
-        else if (cnum == 1) newAccount();
-        else if (cnum == 2) select();
-        else if (cnum == 3) deposit();
-        else if (cnum == 4) authorizeLoan();
-        else if (cnum == 5) showAll();
-        else if (cnum == 6) addInterest();
-        else if (cnum == 7) setForeign();
-        else
-            System.out.println("illegal command");
+        if (cnum == 0) {
+            quit();
+        } else if (cnum == 1) {
+            newAccount();
+        } else if (cnum == 2) {
+            select();
+        } else if (cnum == 3) {
+            deposit();
+        } else if (cnum == 4) {
+            authorizeLoan();
+        } else if (cnum == 5) {
+            showAll();
+        } else if (cnum == 6) {
+            addInterest();
+        } else if (cnum == 7) {
+            setForeign();
+        } else {
+            System.out.println("illegal command.");
+        }
     }
 
     private void quit() {
@@ -41,7 +50,7 @@ public class BankClient {
     }
 
     private void newAccount() {
-        System.out.print("Enter account type(1=savings, 2=checking): ");
+        System.out.print("Enter account type (1 = Savings, 2 = Checking): ");
         int type = scanner.nextInt();
         boolean isforeign = requestForeign();
         current = bank.newAccount(type, isforeign);
@@ -65,9 +74,9 @@ public class BankClient {
         System.out.print("Enter loan amount: ");
         int loanamt = scanner.nextInt();
         if (bank.authorizeLoan(current, loanamt))
-            System.out.println("Your loan is approved");
+            System.out.println("Your loan is approved.");
         else
-            System.out.println("Your loan is denied");
+            System.out.println("Your loan is denied.");
     }
 
     private void showAll() {

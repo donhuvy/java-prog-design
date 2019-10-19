@@ -36,8 +36,7 @@ public class SavingsAccount implements BankAccount {
     }
 
     public String toString() {
-        return "Savings account " + acctnum + ": balance=" + balance
-                + ", is " + (isforeign ? "foreign" : "domestic");
+        return "Savings account " + acctnum + ": balance=" + balance + ", is " + (isforeign ? "foreign" : "domestic");
     }
 
     public void addInterest() {

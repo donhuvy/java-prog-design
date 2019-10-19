@@ -35,8 +35,7 @@ public class CheckingAccount implements BankAccount {
     }
 
     public String toString() {
-        return "Checking account " + acctnum + ": balance=" + balance
-                + ", is " + (isforeign ? "foreign" : "domestic");
+        return "Checking account " + acctnum + ": balance=" + balance + ", is " + (isforeign ? "foreign" : "domestic");
     }
 
 }
