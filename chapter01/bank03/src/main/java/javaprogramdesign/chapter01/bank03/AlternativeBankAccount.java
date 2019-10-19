@@ -5,11 +5,13 @@ package javaprogramdesign.chapter01.bank03;
 // It is an example of bad design.
 
 public class AlternativeBankAccount {
-   public int acctnum;
-   public int balance = 0;
-   public boolean isforeign = false;
 
-   public AlternativeBankAccount(int a) {
-      acctnum = a;
-   }
+    public int acctnum;
+    public int balance = 0;
+    public boolean isforeign = false;
+
+    public AlternativeBankAccount(int a) {
+        acctnum = a;
+    }
+
 }

@@ -1,4 +1,4 @@
-package javaprogramdesign.chapter01.bank02;
+package javaprogramdesign.chapter01.bank03;
 
 import java.util.Scanner;
 
@@ -11,7 +11,7 @@ public class BankClient {
 
     public void run() {
         while (!done) {
-            System.out.print("Enter command (0 = Quit, 1 = New, 2 = Select, 3 = Deposit, 4 = Loan, 5 = Show, 6 = Interest): ");
+            System.out.print("Enter command (0=quit, 1=new, 2=select, 3=deposit, 4=loan, 5=show, 6=interest, 7=setforeign): ");
             int cnum = scanner.nextInt();
             processCommand(cnum);
         }
@@ -32,6 +32,8 @@ public class BankClient {
             showAll();
         } else if (cnum == 6) {
             addInterest();
+        } else if (cnum == 7) {
+            setForeign();
         } else {
             System.out.println("illegal command.");
         }
@@ -43,8 +45,9 @@ public class BankClient {
     }
 
     private void newAccount() {
-        current = bank.newAccount();
-        System.out.println("Your new account number is " + current);
+        boolean isforeign = requestForeign();
+        current = bank.newAccount(isforeign);
+        System.out.println("Your new account number is " + current + ".");
     }
 
     private void select() {
@@ -63,11 +66,10 @@ public class BankClient {
     private void authorizeLoan() {
         System.out.print("Enter loan amount: ");
         int loanamt = scanner.nextInt();
-        if (bank.authorizeLoan(current, loanamt)) {
+        if (bank.authorizeLoan(current, loanamt))
             System.out.println("Your loan is approved.");
-        } else {
+        else
             System.out.println("Your loan is denied.");
-        }
     }
 
     private void showAll() {
@@ -76,6 +78,16 @@ public class BankClient {
 
     private void addInterest() {
         bank.addInterest();
+    }
+
+    private void setForeign() {
+        bank.setForeign(current, requestForeign());
+    }
+
+    private boolean requestForeign() {
+        System.out.print("Enter 1 for foreign, 2 for domestic: ");
+        int val = scanner.nextInt();
+        return val == 1;
     }
 
 }

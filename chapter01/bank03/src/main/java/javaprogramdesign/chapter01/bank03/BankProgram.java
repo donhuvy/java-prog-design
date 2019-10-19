@@ -1,4 +1,4 @@
-package javaprogramdesign.chapter01.bank02;
+package javaprogramdesign.chapter01.bank03;
 
 public class BankProgram {
 
